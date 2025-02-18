@@ -3,30 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Application Form</title>
+    <title>Upload CV</title>
 </head>
 <body>
-    <h2>Job Application Form</h2>
-    <form action="https://script.google.com/macros/s/AKfycbyoaxHwFXI6i9B7ajOLuMGGuVTv4P0JpDCVD3gkvfDzmvF2GfD5D2C0WCZzqyOpMTvqPw/exec" method="POST">
-        <label for="full_name">Full Name:</label>
-        <input type="text" id="full_name" name="Full Name" required><br><br>
-
-        <label for="years_of_experience">Years of Experience:</label>
-        <input type="number" id="years_of_experience" name="Years of Experience" required><br><br>
-
-        <label for="position">Position:</label>
-        <input type="text" id="position" name="Position" required><br><br>
-
-        <label for="preferred_job_location">Preferred Job Location:</label>
-        <input type="text" id="preferred_job_location" name="Preferred Job Location" required><br><br>
-
-        <label for="phone">Phone Number:</label>
-        <input type="tel" id="phone" name="Phone Number" required><br><br>
-
-        <label for="cv">Upload CV:</label>
-        <input type="file" id="cv" name="CV" required><br><br>
-
+    <h2>Upload Your CV</h2>
+    <form id="cvForm" action="https://script.google.com/macros/s/AKfycbyoaxHwFXI6i9B7ajOLuMGGuVTv4P0JpDCVD3gkvfDzmvF2GfD5D2C0WCZzqyOpMTvqPw/exec" method="post" enctype="multipart/form-data">
+        
+        <!-- Hidden Fields to Pass Voiceflow Variables -->
+        <input type="hidden" name="Full Name" id="full_name">
+        <input type="hidden" name="Years of Experience" id="years_of_experience">
+        <input type="hidden" name="Position" id="position">
+        <input type="hidden" name="Preferred Job Location" id="preferred_job_location">
+        <input type="hidden" name="Phone Number" id="phoneno">
+        
+        <!-- Visible File Upload -->
+        <label for="cv">Upload Your CV:</label>
+        <input type="file" name="CV" id="cv" required>
+        
         <button type="submit">Submit</button>
     </form>
+
+    <script>
+        // Capture Voiceflow variables from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        document.getElementById("full_name").value = urlParams.get("full_name") || "";
+        document.getElementById("years_of_experience").value = urlParams.get("years_of_experience") || "";
+        document.getElementById("position").value = urlParams.get("position") || "";
+        document.getElementById("preferred_job_location").value = urlParams.get("preferred_job_location") || "";
+        document.getElementById("phoneno").value = urlParams.get("phoneno") || "";
+    </script>
 </body>
 </html>
