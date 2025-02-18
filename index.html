@@ -7,30 +7,47 @@
 </head>
 <body>
     <h2>Upload Your CV</h2>
-    <form id="cvForm" action="https://script.google.com/macros/s/AKfycbzYnsbsjNiXm8HTbXoRWosMCUuCoOK5zata1ypgOVFNKoq4YGUpE7HLEbJrEpIf8iUGUg/exec" method="post" enctype="multipart/form-data">
+    <form id="cvForm">
+        <input type="hidden" name="full_name" id="full_name">
+        <input type="hidden" name="years_of_experience" id="years_of_experience">
+        <input type="hidden" name="position" id="position">
+        <input type="hidden" name="preferred_job_location" id="preferred_job_location">
+        <input type="hidden" name="phoneno" id="phoneno">
         
-        <!-- Hidden Fields to Pass Voiceflow Variables -->
-        <input type="hidden" name="Full Name" id="full_name">
-        <input type="hidden" name="Years of Experience" id="years_of_experience">
-        <input type="hidden" name="Position" id="position">
-        <input type="hidden" name="Preferred Job Location" id="preferred_job_location">
-        <input type="hidden" name="Phone Number" id="phoneno">
-        
-        <!-- Visible File Upload -->
-        <label for="cv">Upload Your CV:</label>
-        <input type="file" name="CV" id="cv" required>
-        
+        <label for="cv">Upload CV:</label>
+        <input type="file" id="cv" name="cv" required>
+        <br><br>
         <button type="submit">Submit</button>
     </form>
 
     <script>
-        // Capture Voiceflow variables from the URL
+        // Fetch Voiceflow Variables (Assumes Voiceflow passes them in URL)
         const urlParams = new URLSearchParams(window.location.search);
         document.getElementById("full_name").value = urlParams.get("full_name") || "";
         document.getElementById("years_of_experience").value = urlParams.get("years_of_experience") || "";
         document.getElementById("position").value = urlParams.get("position") || "";
         document.getElementById("preferred_job_location").value = urlParams.get("preferred_job_location") || "";
         document.getElementById("phoneno").value = urlParams.get("phoneno") || "";
+
+        document.getElementById("cvForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            
+            let formData = new FormData(this);
+            let webhookUrl = "https://script.google.com/macros/s/AKfycbyN93n59WyYRn0hU6DhCbYvhYxyQyJLF5oZrnsO250nAh9QOiE-1_XiQqDbnt6gzTvC/exec"; // Replace with actual script URL
+
+            try {
+                let response = await fetch(webhookUrl, {
+                    method: "POST",
+                    body: formData
+                });
+
+                let result = await response.text();
+                alert("Upload successful!");
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Upload failed!");
+            }
+        });
     </script>
 </body>
 </html>
