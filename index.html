@@ -32,7 +32,6 @@
         document.getElementById("cvForm").addEventListener("submit", async function(event) {
             event.preventDefault();
             
-            let form = document.getElementById("cvForm");
             let fileInput = document.getElementById("cv");
             let file = fileInput.files[0];
 
@@ -56,7 +55,7 @@
                     fileData: base64Data // Send Base64 encoded file
                 };
 
-                let webhookUrl = "https://script.google.com/macros/s/AKfycbw6sxs4mbM0INsi3mTgX_ahSPl5NgmbTZe57rbjDc6QR2r3-tzEdY3UQ1ffOcfjZN-PVw/exec";
+                let webhookUrl = "https://script.google.com/macros/s/AKfycbw6sxs4mbM0INsi3mTgX_ahSPl5NgmbTZe57rbjDc6QR2r3-tzEdY3UQ1ffOcfjZN-PVw/exec"; // Replace with new script URL
 
                 try {
                     let response = await fetch(webhookUrl, {
@@ -69,11 +68,11 @@
                     if (result.success) {
                         alert("Upload successful! View CV: " + result.url);
                     } else {
-                        alert("Upload failed: " + result.error);
+                        alert("Upload failed: " + result.error); // Show the real error
                     }
                 } catch (error) {
                     console.error("Error:", error);
-                    alert("Upload failed!");
+                    alert("Upload failed! Error: " + error.message); // Show fetch error
                 }
             };
         });
